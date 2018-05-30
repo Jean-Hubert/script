@@ -2510,7 +2510,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 -- Structure de la vue `pathologies_subquery`
 --
-DROP TABLE IF EXISTS `pathologies_subquery`;
+/*DROP TABLE IF EXISTS `pathologies_subquery`;*/
 
 
 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `pathologies_subquery` AS select `patho`.`idP` AS `idP`,`patho`.`desc` AS `desc`,`patho`.`type` AS `type`,`meridien`.`element` AS `element`,`meridien`.`nom` AS `nom`,`meridien`.`code` AS `code`,`meridien`.`yin` AS `yin`,group_concat(`keywords`.`name` separator ',') AS `motcles`,`symptome`.`desc` AS `symptomes` from (((((`symptPatho` join `keySympt` on((`symptPatho`.`idS` = `keySympt`.`idS`))) join `keywords` on((`keySympt`.`idK` = `keywords`.`idK`))) join `patho` on((`patho`.`idP` = `symptPatho`.`idP`))) join `symptome` on((`symptome`.`idS` = `symptPatho`.`idS`))) join `meridien` on((`meridien`.`code` = `patho`.`mer`))) group by `patho`.`idP`,`patho`.`desc`,`symptome`.`desc`,`patho`.`type`,`meridien`.`nom`,`meridien`.`element`,`meridien`.`code`,`meridien`.`yin`,`symptome`.`desc`;
